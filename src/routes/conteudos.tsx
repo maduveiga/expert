@@ -80,7 +80,7 @@ const topics: Topic[] = [
   },
 ];
 
-function Page() {
+export function Page() {
   const [active, setActive] = useState<Topic | null>(null);
 
   useEffect(() => {

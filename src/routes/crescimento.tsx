@@ -23,7 +23,7 @@ const steps = [
   { n: "06", title: "Apoio consultivo", desc: "Um time que pensa o seu negócio junto com você." },
 ];
 
-function Page() {
+export function Page() {
   const total = steps.length;
   return (
     <PageShell>

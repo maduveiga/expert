@@ -37,7 +37,7 @@ const items = [
   { icon: LineChart, title: "Consultoria Estratégica", desc: "Leitura crítica de indicadores e direcionamento financeiro para escalar com previsibilidade." },
 ];
 
-function Page() {
+export function Page() {
   return (
     <PageShell flush>
       {/* Custom hero with animated grid (scoped via inline style) */}

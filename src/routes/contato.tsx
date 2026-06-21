@@ -15,7 +15,7 @@ export const Route = createFileRoute("/contato")({
   component: Page,
 });
 
-function Page() {
+export function Page() {
   const [sent, setSent] = useState(false);
   return (
     <PageShell>

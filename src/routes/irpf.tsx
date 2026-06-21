@@ -32,7 +32,7 @@ const faqs = [
   { q: "Como a Expert acompanha minha declaração?", a: "Atendimento especializado, revisão completa de documentos e suporte ao longo do ano todo." },
 ];
 
-function Page() {
+export function Page() {
   const [open, setOpen] = useState<number | null>(0);
   const max = Math.max(...services.map((s) => s.value));
 

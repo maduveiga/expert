@@ -36,7 +36,7 @@ const reviews = [
   { name: "Luciane Schultz", text: "Excelente escritório de contabilidade. Profissionalismo e eficiência definem o atendimento." },
 ];
 
-function Home() {
+export function Home() {
   return (
     <PageShell flush>
         {/* HERO */}
@@ -61,10 +61,10 @@ function Home() {
               A Expert Contabilidade une estratégia, tecnologia e atendimento próximo para ajudar empresas e empresários a crescerem com segurança.
             </p>
             <div className="mt-8 sm:mt-10 flex flex-wrap gap-3 sm:gap-4">
-              <Link to="/contato" className="btn-primary">
-                Falar com Especialistas <ArrowRight size={18} />
-              </Link>
-              <Link to="/contato" className="btn-ghost">Abrir meu CNPJ</Link>
+              <a href="https://wa.me/5547992373196?text=Olá! Quero atendimento pelo WhatsApp da Expert Contabilidade." target="_blank" rel="noreferrer" className="btn-primary">
+                Atendimento pelo WhatsApp <ArrowRight size={18} />
+              </a>
+              <a href="https://wa.me/5547992373196?text=Olá! Quero abrir meu CNPJ com a Expert Contabilidade." target="_blank" rel="noreferrer" className="btn-ghost">Abrir meu CNPJ</a>
             </div>
 
             <div className="mt-12 sm:mt-20 flex flex-wrap items-center gap-x-6 sm:gap-x-10 gap-y-3 text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-foreground/50">
@@ -173,11 +173,11 @@ function Home() {
               Pronto para uma contabilidade à altura da sua ambição?
             </h2>
             <p className="mt-5 max-w-xl text-muted-foreground">
-              Converse com nossos especialistas e descubra como organizar, otimizar e expandir a sua operação.
+              Fale diretamente com nossa equipe pelo WhatsApp e descubra como organizar, otimizar e expandir a sua operação agora.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link to="/contato" className="btn-primary">Falar com Especialistas <ArrowRight size={18} /></Link>
-              <Link to="/contato" className="btn-ghost">Abrir meu CNPJ</Link>
+              <a href="https://wa.me/5547992373196?text=Olá! Quero atendimento pelo WhatsApp da Expert Contabilidade." target="_blank" rel="noreferrer" className="btn-primary">Chamar no WhatsApp <ArrowRight size={18} /></a>
+              <Link to="/suporte-mei" className="btn-ghost">Ver Suporte MEI</Link>
             </div>
           </div>
         </section>
