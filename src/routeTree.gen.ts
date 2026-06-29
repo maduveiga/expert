@@ -5,13 +5,15 @@
 // noinspection JSUnusedGlobalSymbols
 
 // This file is the manually maintained route tree (TanStack Router - file-based).
-// Updated to include suporte-mei, login and talentos routes.
+// Updated to include suporte-mei, login, talentos, and admin routes.
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as SuporteMeiRouteImport } from './routes/suporte-mei'
 import { Route as TalentosRouteImport } from './routes/talentos'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AdminPortalRouteImport } from './routes/admin-portal'
 import { Route as MaisQueContabilidadeRouteImport } from './routes/mais-que-contabilidade'
 import { Route as IrpfRouteImport } from './routes/irpf'
 import { Route as CrescimentoRouteImport } from './routes/crescimento'
@@ -26,6 +28,8 @@ const SolucoesRoute = SolucoesRouteImport.update({ id: '/solucoes', path: '/solu
 const SuporteMeiRoute = SuporteMeiRouteImport.update({ id: '/suporte-mei', path: '/suporte-mei', getParentRoute: () => rootRouteImport } as any)
 const TalentosRoute = TalentosRouteImport.update({ id: '/talentos', path: '/talentos', getParentRoute: () => rootRouteImport } as any)
 const LoginRoute = LoginRouteImport.update({ id: '/login', path: '/login', getParentRoute: () => rootRouteImport } as any)
+const AdminRoute = AdminRouteImport.update({ id: '/admin', path: '/admin', getParentRoute: () => rootRouteImport } as any)
+const AdminPortalRoute = AdminPortalRouteImport.update({ id: '/admin-portal', path: '/admin-portal', getParentRoute: () => rootRouteImport } as any)
 const MaisQueContabilidadeRoute = MaisQueContabilidadeRouteImport.update({ id: '/mais-que-contabilidade', path: '/mais-que-contabilidade', getParentRoute: () => rootRouteImport } as any)
 const IrpfRoute = IrpfRouteImport.update({ id: '/irpf', path: '/irpf', getParentRoute: () => rootRouteImport } as any)
 const CrescimentoRoute = CrescimentoRouteImport.update({ id: '/crescimento', path: '/crescimento', getParentRoute: () => rootRouteImport } as any)
@@ -47,6 +51,8 @@ export interface FileRoutesByFullPath {
   '/suporte-mei': typeof SuporteMeiRoute
   '/talentos': typeof TalentosRoute
   '/login': typeof LoginRoute
+  '/admin': typeof AdminRoute
+  '/admin-portal': typeof AdminPortalRoute
   '/lgpd': typeof LgpdRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/termos-de-uso': typeof TermosDeUsoRoute
@@ -62,6 +68,8 @@ export interface FileRoutesByTo {
   '/suporte-mei': typeof SuporteMeiRoute
   '/talentos': typeof TalentosRoute
   '/login': typeof LoginRoute
+  '/admin': typeof AdminRoute
+  '/admin-portal': typeof AdminPortalRoute
   '/lgpd': typeof LgpdRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/termos-de-uso': typeof TermosDeUsoRoute
@@ -78,6 +86,8 @@ export interface FileRoutesById {
   '/suporte-mei': typeof SuporteMeiRoute
   '/talentos': typeof TalentosRoute
   '/login': typeof LoginRoute
+  '/admin': typeof AdminRoute
+  '/admin-portal': typeof AdminPortalRoute
   '/lgpd': typeof LgpdRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/termos-de-uso': typeof TermosDeUsoRoute
@@ -95,6 +105,8 @@ export interface FileRouteTypes {
     | '/suporte-mei'
     | '/talentos'
     | '/login'
+    | '/admin'
+    | '/admin-portal'
     | '/lgpd'
     | '/politica-de-privacidade'
     | '/termos-de-uso'
@@ -110,6 +122,8 @@ export interface FileRouteTypes {
     | '/suporte-mei'
     | '/talentos'
     | '/login'
+    | '/admin'
+    | '/admin-portal'
     | '/lgpd'
     | '/politica-de-privacidade'
     | '/termos-de-uso'
@@ -125,6 +139,8 @@ export interface FileRouteTypes {
     | '/suporte-mei'
     | '/talentos'
     | '/login'
+    | '/admin'
+    | '/admin-portal'
     | '/lgpd'
     | '/politica-de-privacidade'
     | '/termos-de-uso'
@@ -141,6 +157,8 @@ export interface RootRouteChildren {
   SuporteMeiRoute: typeof SuporteMeiRoute
   TalentosRoute: typeof TalentosRoute
   LoginRoute: typeof LoginRoute
+  AdminRoute: typeof AdminRoute
+  AdminPortalRoute: typeof AdminPortalRoute
   LgpdRoute: typeof LgpdRoute
   PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
   TermosDeUsoRoute: typeof TermosDeUsoRoute
@@ -174,6 +192,20 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-portal': {
+      id: '/admin-portal'
+      path: '/admin-portal'
+      fullPath: '/admin-portal'
+      preLoaderRoute: typeof AdminPortalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mais-que-contabilidade': {
@@ -253,6 +285,8 @@ const rootRouteChildren: RootRouteChildren = {
   SuporteMeiRoute: SuporteMeiRoute,
   TalentosRoute: TalentosRoute,
   LoginRoute: LoginRoute,
+  AdminRoute: AdminRoute,
+  AdminPortalRoute: AdminPortalRoute,
   LgpdRoute: LgpdRoute,
   PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
   TermosDeUsoRoute: TermosDeUsoRoute,
