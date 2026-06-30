@@ -429,8 +429,8 @@ export function TeamPortalPanel() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Inner sub-sidebar */}
-        <div className="lg:col-span-3 flex flex-col gap-1.5 bg-white/[0.01] border border-white/5 p-4 rounded-2xl">
-          <p className="text-[9px] uppercase tracking-[0.2em] text-white/20 px-3 mb-2 font-semibold">Tópicos Administrativos</p>
+        <div className="lg:col-span-4 xl:col-span-3 flex flex-col gap-2 bg-white/[0.01] border border-white/5 p-5 rounded-3xl">
+          <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 px-2 mb-2 font-semibold">Tópicos Administrativos</p>
           {PORTAL_PAGES.map(p => {
             const Icon = getPageIcon(p);
             const isActive = activePage === p;
@@ -442,24 +442,24 @@ export function TeamPortalPanel() {
                   setEditingId(null);
                   resetForm(p);
                 }}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium tracking-wide transition-all border ${
+                className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-[13px] font-semibold tracking-wide transition-all border ${
                   isActive 
                     ? "bg-[#00E5F1]/10 text-[#00E5F1] border-[#00E5F1]/20 shadow-[0_0_15px_rgba(0,229,241,0.05)]" 
                     : "border-transparent text-white/40 hover:text-white hover:bg-white/5"
                 }`}
               >
-                <div className="flex items-center gap-2">
-                  <Icon size={14} className={isActive ? "text-[#00E5F1]" : "text-white/40"} />
-                  <span>{p}</span>
+                <div className="flex items-center gap-3">
+                  <Icon size={16} className={isActive ? "text-[#00E5F1]" : "text-white/40"} />
+                  <span className="truncate">{p}</span>
                 </div>
-                {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#00E5F1]" />}
+                {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#00E5F1] shrink-0" />}
               </button>
             )
           })}
         </div>
 
         {/* Editing & Listing main box */}
-        <div className="lg:col-span-9 space-y-6">
+        <div className="lg:col-span-8 xl:col-span-9 space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-4 bg-white/[0.02] border border-white/5 p-4 rounded-2xl">
             <div>
               <h4 className="text-sm font-semibold text-white">{activePage}</h4>
@@ -530,15 +530,15 @@ export function TeamPortalPanel() {
                 <div className="space-y-4">
                   {/* Contextual form fields based on type */}
                   {activePage === "Calendário" && (
-                    <div className="grid grid-cols-2 gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
                       <div className="space-y-1.5">
                         <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold">Data do Evento</label>
-                        <input type="datetime-local" value={form.date ? form.date.slice(0, 16) : ""} onChange={e => setForm({...form, date: new Date(e.target.value).toISOString()})} className="w-full px-3 py-2 rounded-lg bg-black/20 border border-white/10 outline-none text-xs text-white [color-scheme:dark]" />
+                        <input type="datetime-local" value={form.date ? form.date.slice(0, 16) : ""} onChange={e => setForm({...form, date: new Date(e.target.value).toISOString()})} className="w-full px-4 py-2.5 rounded-xl bg-black/30 border border-white/10 outline-none text-xs sm:text-sm text-white [color-scheme:dark]" />
                       </div>
                       <div className="space-y-1.5">
                         <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold">Categoria / Tipo</label>
                         <Select value={form.eventType} onValueChange={v => setForm({...form, eventType: v})}>
-                          <SelectTrigger className="w-full px-3 py-2 rounded-lg bg-black/20 border border-white/10 outline-none text-xs text-white [&>span]:truncate">
+                          <SelectTrigger className="w-full px-4 py-2.5 rounded-xl bg-black/30 border border-white/10 outline-none text-sm text-white [&>span]:truncate">
                             <SelectValue placeholder="Selecione categoria" />
                           </SelectTrigger>
                           <SelectContent className="bg-[#0b1416] border-white/10 text-white min-w-[8rem]">
@@ -554,18 +554,18 @@ export function TeamPortalPanel() {
                   )}
 
                   {activePage === "Aniversariantes" && (
-                    <div className="space-y-1.5">
+                    <div className="space-y-1.5 bg-white/5 p-4 rounded-2xl border border-white/5">
                       <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold">Mês e Dia do Aniversário</label>
-                      <input type="date" value={form.date ? form.date.slice(0, 10) : ""} onChange={e => setForm({...form, date: new Date(e.target.value + "T12:00:00.000Z").toISOString()})} className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 outline-none text-xs text-white [color-scheme:dark]" />
+                      <input type="date" value={form.date ? form.date.slice(0, 10) : ""} onChange={e => setForm({...form, date: new Date(e.target.value + "T12:00:00.000Z").toISOString()})} className="w-full px-4 py-2.5 rounded-xl bg-black/30 border border-white/10 outline-none text-sm text-white [color-scheme:dark] max-w-xs" />
                     </div>
                   )}
 
                   {activePage === "Comunicados" && (
-                    <div className="grid grid-cols-2 gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
                       <div className="space-y-1.5">
                         <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold">Prioridade</label>
                         <Select value={form.priority} onValueChange={v => setForm({...form, priority: v})}>
-                          <SelectTrigger className="w-full px-3 py-2 rounded-lg bg-black/20 border border-white/10 outline-none text-xs text-white">
+                          <SelectTrigger className="w-full px-4 py-2.5 rounded-xl bg-black/30 border border-white/10 outline-none text-sm text-white">
                             <SelectValue placeholder="Selecione" />
                           </SelectTrigger>
                           <SelectContent className="bg-[#0b1416] border-white/10 text-white min-w-[8rem]">
@@ -579,7 +579,7 @@ export function TeamPortalPanel() {
                       </div>
                       <div className="space-y-1.5">
                         <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold">Área / Tag (Ex: Fiscal, RH)</label>
-                        <input type="text" value={form.categoryTag} onChange={e => setForm({...form, categoryTag: e.target.value})} className="w-full px-3 py-2 rounded-lg bg-black/20 border border-white/10 outline-none text-xs text-white" placeholder="Ex: Societário" />
+                        <input type="text" value={form.categoryTag} onChange={e => setForm({...form, categoryTag: e.target.value})} className="w-full px-4 py-2.5 rounded-xl bg-black/30 border border-white/10 outline-none text-sm text-white" placeholder="Ex: Societário" />
                       </div>
                     </div>
                   )}

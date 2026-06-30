@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Edit3, Save, X, Shield, ToggleLeft, ToggleRight, Check } from "lucide-react";
+import { Plus, Trash2, Edit3, Save, X, Shield, ToggleLeft, ToggleRight, Check, Eye, EyeOff } from "lucide-react";
 
 const USERS_KEY = 'expert_users';
 
@@ -14,6 +14,7 @@ export function UsersPanel() {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [form, setForm] = useState({ login: '', password: '', active: true, name: '' });
   const [savedMsg, setSavedMsg] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     try {
@@ -98,7 +99,12 @@ export function UsersPanel() {
             </div>
             <div className="space-y-1">
               <label className="text-[10px] uppercase text-white/40">Senha de Acesso</label>
-              <input required type="text" value={form.password} onChange={e => setForm({...form, password: e.target.value})} className="w-full px-4 py-2 rounded-xl bg-white/[0.04] border border-white/8 focus:border-[#00E5F1]/40 outline-none text-sm" placeholder="Senha" />
+              <div className="relative group">
+                <input required type={showPassword ? "text" : "password"} value={form.password} onChange={e => setForm({...form, password: e.target.value})} className="w-full px-4 py-2 pr-10 rounded-xl bg-white/[0.04] border border-white/8 focus:border-[#00E5F1]/40 outline-none text-sm" placeholder="Senha" />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors">
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
             </div>
             <div className="space-y-1 flex flex-col justify-center">
               <label className="text-[10px] uppercase text-white/40 mb-2">Status da Conta</label>
