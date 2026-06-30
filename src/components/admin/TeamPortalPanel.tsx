@@ -427,9 +427,9 @@ export function TeamPortalPanel() {
       </div>
       <div className="h-px bg-gradient-to-r from-[#00E5F1]/20 via-transparent to-transparent mb-6" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="flex flex-col xl:flex-row gap-8 items-start">
         {/* Inner sub-sidebar */}
-        <div className="lg:col-span-4 xl:col-span-3 flex flex-col gap-2 bg-white/[0.01] border border-white/5 p-5 rounded-3xl">
+        <div className="w-full xl:w-[260px] shrink-0 flex flex-col gap-2 bg-white/[0.01] border border-white/5 p-5 rounded-3xl">
           <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 px-2 mb-2 font-semibold">Tópicos Administrativos</p>
           {PORTAL_PAGES.map(p => {
             const Icon = getPageIcon(p);
@@ -448,18 +448,18 @@ export function TeamPortalPanel() {
                     : "border-transparent text-white/40 hover:text-white hover:bg-white/5"
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <Icon size={16} className={isActive ? "text-[#00E5F1]" : "text-white/40"} />
+                <div className="flex items-center gap-3 min-w-0">
+                  <Icon size={16} className={`shrink-0 ${isActive ? "text-[#00E5F1]" : "text-white/40"}`} />
                   <span className="truncate">{p}</span>
                 </div>
-                {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#00E5F1] shrink-0" />}
+                {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#00E5F1] shrink-0 ml-2" />}
               </button>
             )
           })}
         </div>
 
         {/* Editing & Listing main box */}
-        <div className="lg:col-span-8 xl:col-span-9 space-y-6">
+        <div className="flex-1 min-w-0 space-y-6 w-full">
           <div className="flex flex-wrap items-center justify-between gap-4 bg-white/[0.02] border border-white/5 p-4 rounded-2xl">
             <div>
               <h4 className="text-sm font-semibold text-white">{activePage}</h4>
