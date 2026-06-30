@@ -480,7 +480,7 @@ function PagesPanel() {
 export function AdminPage() {
   const { user, isMaster, logout } = useAuth();
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState("palette");
+  const [activeSection, setActiveSection] = useState("team_portal");
   const [config, setConfig] = useState<typeof DEFAULT_CONFIG>(() => {
     try {
       const saved = localStorage.getItem("expert_site_config");
