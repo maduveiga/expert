@@ -635,12 +635,8 @@ export function AdminPage() {
                       <button
                         key={item.id}
                         onClick={() => {
-                          if (item.id === "team_portal") {
-                            navigate({ to: "/admin-portal" });
-                          } else {
-                            setActiveSection(item.id);
-                            setSidebarOpen(false);
-                          }
+                          setActiveSection(item.id);
+                          setSidebarOpen(false);
                         }}
                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
                           isActive
@@ -694,6 +690,7 @@ export function AdminPage() {
 
             {/* Panels */}
             <div className="animate-in fade-in-0 slide-in-from-bottom-2 duration-300" key={activeSection}>
+              {activeSection === "team_portal" && <TeamPortalPanel />}
               {activeSection === "palette" && <PalettePanel config={config} onChange={handleChange} />}
               {activeSection === "hero" && <HeroPanel config={config} onChange={handleChange} />}
               {activeSection === "about" && <AboutPanel config={config} onChange={handleChange} />}
@@ -728,74 +725,76 @@ export function AdminPage() {
         </main>
 
         {/* ========== LIVE PREVIEW ========== */}
-        <aside className="hidden xl:flex w-[380px] shrink-0 border-l border-white/5 flex-col">
-          <div className="p-4 border-b border-white/5 flex items-center justify-between">
-            <p className="text-xs uppercase tracking-widest text-white/30">Prévia ao Vivo</p>
-            <div className="flex items-center gap-1 bg-white/5 rounded-lg p-0.5">
-              {([["desktop", Monitor], ["tablet", Tablet], ["mobile", Smartphone]] as const).map(([d, Icon]) => (
-                <button
-                  key={d}
-                  onClick={() => setPreviewDevice(d)}
-                  className={`p-1.5 rounded-md transition-all ${previewDevice === d ? "bg-[#00E5F1]/20 text-[#00E5F1]" : "text-white/30 hover:text-white/60"}`}
-                >
-                  <Icon size={13} />
-                </button>
-              ))}
+        {(!["team_portal", "users", "pages"].includes(activeSection)) && (
+          <aside className="hidden xl:flex w-[380px] shrink-0 border-l border-white/5 flex-col">
+            <div className="p-4 border-b border-white/5 flex items-center justify-between">
+              <p className="text-xs uppercase tracking-widest text-white/30">Prévia ao Vivo</p>
+              <div className="flex items-center gap-1 bg-white/5 rounded-lg p-0.5">
+                {([["desktop", Monitor], ["tablet", Tablet], ["mobile", Smartphone]] as const).map(([d, Icon]) => (
+                  <button
+                    key={d}
+                    onClick={() => setPreviewDevice(d)}
+                    className={`p-1.5 rounded-md transition-all ${previewDevice === d ? "bg-[#00E5F1]/20 text-[#00E5F1]" : "text-white/30 hover:text-white/60"}`}
+                  >
+                    <Icon size={13} />
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="flex-1 overflow-hidden flex items-start justify-center p-4 bg-[#060b0d]">
-            <div
-              className="rounded-xl overflow-hidden border border-white/5 transition-all duration-300 shadow-2xl"
-              style={{
-                width: previewDevice === "mobile" ? "375px" : previewDevice === "tablet" ? "100%" : "100%",
-                maxWidth: "100%",
-                minHeight: "400px",
-                background: config.colorBg,
-              }}
-            >
-              {/* Mini Preview */}
-              <div style={{ transform: "scale(0.6)", transformOrigin: "top left", width: "166.67%", pointerEvents: "none" }}>
-                <div style={{ padding: "24px", minHeight: "600px" }}>
-                  {/* Mini Hero */}
-                  <div style={{ background: `linear-gradient(135deg, ${config.colorPetrol}80, ${config.colorBg})`, borderRadius: "16px", padding: "32px", marginBottom: "24px" }}>
-                    <div style={{ fontSize: "10px", color: config.colorNeon, marginBottom: "8px", letterSpacing: "0.2em", textTransform: "uppercase" }}>{config.heroTagline}</div>
-                    <div style={{ fontSize: "22px", fontWeight: 600, color: "#fff", marginBottom: "12px", lineHeight: 1.2 }}>{config.heroTitle}</div>
-                    <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)", marginBottom: "20px", lineHeight: 1.5 }}>{config.heroSubtitle.slice(0, 120)}...</div>
-                    <div style={{
-                      display: "inline-flex", alignItems: "center", gap: "6px",
-                      padding: "8px 18px", borderRadius: "999px",
-                      background: config.colorNeon, color: "#0b1416", fontSize: "11px", fontWeight: 700
-                    }}>
-                      {config.heroCta1}
+            <div className="flex-1 overflow-hidden flex items-start justify-center p-4 bg-[#060b0d]">
+              <div
+                className="rounded-xl overflow-hidden border border-white/5 transition-all duration-300 shadow-2xl"
+                style={{
+                  width: previewDevice === "mobile" ? "375px" : previewDevice === "tablet" ? "100%" : "100%",
+                  maxWidth: "100%",
+                  minHeight: "400px",
+                  background: config.colorBg,
+                }}
+              >
+                {/* Mini Preview */}
+                <div style={{ transform: "scale(0.6)", transformOrigin: "top left", width: "166.67%", pointerEvents: "none" }}>
+                  <div style={{ padding: "24px", minHeight: "600px" }}>
+                    {/* Mini Hero */}
+                    <div style={{ background: `linear-gradient(135deg, ${config.colorPetrol}80, ${config.colorBg})`, borderRadius: "16px", padding: "32px", marginBottom: "24px" }}>
+                      <div style={{ fontSize: "10px", color: config.colorNeon, marginBottom: "8px", letterSpacing: "0.2em", textTransform: "uppercase" }}>{config.heroTagline}</div>
+                      <div style={{ fontSize: "22px", fontWeight: 600, color: "#fff", marginBottom: "12px", lineHeight: 1.2 }}>{config.heroTitle}</div>
+                      <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)", marginBottom: "20px", lineHeight: 1.5 }}>{config.heroSubtitle.slice(0, 120)}...</div>
+                      <div style={{
+                        display: "inline-flex", alignItems: "center", gap: "6px",
+                        padding: "8px 18px", borderRadius: "999px",
+                        background: config.colorNeon, color: "#0b1416", fontSize: "11px", fontWeight: 700
+                      }}>
+                        {config.heroCta1}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Mini Palette Preview */}
-                  <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
-                    {[config.colorNeon, config.colorOrange, config.colorPetrol].map((c, i) => (
-                      <div key={i} style={{ width: "40px", height: "40px", borderRadius: "10px", background: c }} />
-                    ))}
-                  </div>
+                    {/* Mini Palette Preview */}
+                    <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
+                      {[config.colorNeon, config.colorOrange, config.colorPetrol].map((c, i) => (
+                        <div key={i} style={{ width: "40px", height: "40px", borderRadius: "10px", background: c }} />
+                      ))}
+                    </div>
 
-                  {/* Mini Content preview */}
-                  <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: "12px", padding: "20px", marginBottom: "12px" }}>
-                    <div style={{ fontSize: "8px", color: config.colorNeon, marginBottom: "6px", letterSpacing: "0.2em" }}>QUEM SOMOS</div>
-                    <div style={{ fontSize: "15px", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>{config.aboutTitle}</div>
-                    <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{config.aboutText.slice(0, 150)}...</div>
-                  </div>
+                    {/* Mini Content preview */}
+                    <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: "12px", padding: "20px", marginBottom: "12px" }}>
+                      <div style={{ fontSize: "8px", color: config.colorNeon, marginBottom: "6px", letterSpacing: "0.2em" }}>QUEM SOMOS</div>
+                      <div style={{ fontSize: "15px", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>{config.aboutTitle}</div>
+                      <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{config.aboutText.slice(0, 150)}...</div>
+                    </div>
 
-                  <div style={{ background: `linear-gradient(135deg, ${config.colorNeon}15, ${config.colorOrange}10)`, borderRadius: "12px", padding: "20px" }}>
-                    <div style={{ fontSize: "15px", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>{config.ctaTitle}</div>
-                    <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{config.ctaSubtitle.slice(0, 100)}...</div>
+                    <div style={{ background: `linear-gradient(135deg, ${config.colorNeon}15, ${config.colorOrange}10)`, borderRadius: "12px", padding: "20px" }}>
+                      <div style={{ fontSize: "15px", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>{config.ctaTitle}</div>
+                      <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{config.ctaSubtitle.slice(0, 100)}...</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="p-3 border-t border-white/5 text-center">
-            <p className="text-[10px] text-white/20">Prévia representativa • Salve para aplicar ao site</p>
-          </div>
-        </aside>
+            <div className="p-3 border-t border-white/5 text-center">
+              <p className="text-[10px] text-white/20">Prévia representativa • Salve para aplicar ao site</p>
+            </div>
+          </aside>
+        )}
       </div>
     </div>
   );
