@@ -346,8 +346,8 @@ export function TeamPortalPanel() {
     }).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     return (
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-4 rounded-2xl bg-white/[0.02] border border-white/5 p-6">
+      <div className="flex flex-col md:flex-row gap-6">
+        <div className="flex-1 space-y-4 rounded-2xl bg-white/[0.02] border border-white/5 p-4 sm:p-6 min-w-0">
           <div className="flex items-center justify-between mb-4">
              <h4 className="text-xs font-semibold uppercase tracking-wider text-[#00E5F1]">
                Eventos de {selectedDate?.toLocaleString('pt-BR', { month: 'long', year: 'numeric' })}
@@ -387,7 +387,7 @@ export function TeamPortalPanel() {
             );
           })}
         </div>
-        <div className="space-y-4">
+        <div className="space-y-4 w-full md:w-64 shrink-0">
           <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4 flex justify-center">
             <Calendar
               mode="single"
@@ -427,9 +427,9 @@ export function TeamPortalPanel() {
       </div>
       <div className="h-px bg-gradient-to-r from-[#00E5F1]/20 via-transparent to-transparent mb-6" />
 
-      <div className="flex flex-col xl:flex-row gap-8 items-start">
+      <div className="flex flex-col md:flex-row gap-8 items-start">
         {/* Inner sub-sidebar */}
-        <div className="w-full xl:w-[260px] shrink-0 flex flex-col gap-2 bg-white/[0.01] border border-white/5 p-5 rounded-3xl">
+        <div className="w-full md:w-56 shrink-0 flex flex-col gap-2 bg-white/[0.01] border border-white/5 p-4 sm:p-5 rounded-3xl">
           <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 px-2 mb-2 font-semibold">Tópicos Administrativos</p>
           {PORTAL_PAGES.map(p => {
             const Icon = getPageIcon(p);
@@ -530,12 +530,12 @@ export function TeamPortalPanel() {
                 <div className="space-y-4">
                   {/* Contextual form fields based on type */}
                   {activePage === "Calendário" && (
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
-                      <div className="space-y-1.5">
+                    <div className="flex flex-col gap-4 bg-white/5 p-5 rounded-2xl border border-white/5">
+                      <div className="space-y-1.5 w-full">
                         <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold">Data do Evento</label>
-                        <input type="datetime-local" value={form.date ? form.date.slice(0, 16) : ""} onChange={e => setForm({...form, date: new Date(e.target.value).toISOString()})} className="w-full px-4 py-2.5 rounded-xl bg-black/30 border border-white/10 outline-none text-xs sm:text-sm text-white [color-scheme:dark]" />
+                        <input type="datetime-local" value={form.date ? form.date.slice(0, 16) : ""} onChange={e => setForm({...form, date: new Date(e.target.value).toISOString()})} className="w-full px-4 py-2.5 rounded-xl bg-black/30 border border-white/10 outline-none text-sm text-white [color-scheme:dark]" />
                       </div>
-                      <div className="space-y-1.5">
+                      <div className="space-y-1.5 w-full">
                         <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold">Categoria / Tipo</label>
                         <Select value={form.eventType} onValueChange={v => setForm({...form, eventType: v})}>
                           <SelectTrigger className="w-full px-4 py-2.5 rounded-xl bg-black/30 border border-white/10 outline-none text-sm text-white [&>span]:truncate">
@@ -561,8 +561,8 @@ export function TeamPortalPanel() {
                   )}
 
                   {activePage === "Comunicados" && (
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
-                      <div className="space-y-1.5">
+                    <div className="flex flex-col gap-4 bg-white/5 p-5 rounded-2xl border border-white/5">
+                      <div className="space-y-1.5 w-full">
                         <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold">Prioridade</label>
                         <Select value={form.priority} onValueChange={v => setForm({...form, priority: v})}>
                           <SelectTrigger className="w-full px-4 py-2.5 rounded-xl bg-black/30 border border-white/10 outline-none text-sm text-white">
@@ -577,7 +577,7 @@ export function TeamPortalPanel() {
                           </SelectContent>
                         </Select>
                       </div>
-                      <div className="space-y-1.5">
+                      <div className="space-y-1.5 w-full">
                         <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold">Área / Tag (Ex: Fiscal, RH)</label>
                         <input type="text" value={form.categoryTag} onChange={e => setForm({...form, categoryTag: e.target.value})} className="w-full px-4 py-2.5 rounded-xl bg-black/30 border border-white/10 outline-none text-sm text-white" placeholder="Ex: Societário" />
                       </div>
