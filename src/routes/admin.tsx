@@ -673,20 +673,22 @@ export function AdminPage() {
         <main className="flex-1 overflow-y-auto">
           <div className="max-w-3xl mx-auto py-8 px-4 md:px-8">
             {/* Section Header */}
-            <div className="mb-8">
-              <div className="flex items-center gap-3 mb-2">
-                {activeNav && (
-                  <div className="w-9 h-9 rounded-xl bg-[#00E5F1]/10 flex items-center justify-center">
-                    <activeNav.icon size={18} className="text-[#00E5F1]" />
+            {activeSection !== "team_portal" && (
+              <div className="mb-8">
+                <div className="flex items-center gap-3 mb-2">
+                  {activeNav && (
+                    <div className="w-9 h-9 rounded-xl bg-[#00E5F1]/10 flex items-center justify-center">
+                      <activeNav.icon size={18} className="text-[#00E5F1]" />
+                    </div>
+                  )}
+                  <div>
+                    <h1 className="text-xl font-medium tracking-tight">{activeNav?.label ?? "Editor"}</h1>
+                    <p className="text-xs text-white/30 mt-0.5">Editar conteúdo e configurações</p>
                   </div>
-                )}
-                <div>
-                  <h1 className="text-xl font-medium tracking-tight">{activeNav?.label ?? "Editor"}</h1>
-                  <p className="text-xs text-white/30 mt-0.5">Editar conteúdo e configurações</p>
                 </div>
+                <div className="h-px bg-gradient-to-r from-[#00E5F1]/20 via-transparent to-transparent mt-4" />
               </div>
-              <div className="h-px bg-gradient-to-r from-[#00E5F1]/20 via-transparent to-transparent mt-4" />
-            </div>
+            )}
 
             {/* Panels */}
             <div className="animate-in fade-in-0 slide-in-from-bottom-2 duration-300" key={activeSection}>
@@ -702,7 +704,7 @@ export function AdminPage() {
             </div>
 
             {/* Bottom Save Bar */}
-            {(activeSection !== "pages" && activeSection !== "users") && (
+            {(activeSection !== "pages" && activeSection !== "users" && activeSection !== "team_portal") && (
               <div className="mt-10 flex items-center justify-between p-5 rounded-2xl border border-white/5 bg-white/[0.02]">
                 <div className="flex items-center gap-2 text-xs text-white/30">
                   <AlertCircle size={14} />
@@ -725,76 +727,88 @@ export function AdminPage() {
         </main>
 
         {/* ========== LIVE PREVIEW ========== */}
-        {(!["team_portal", "users", "pages"].includes(activeSection)) && (
-          <aside className="hidden xl:flex w-[380px] shrink-0 border-l border-white/5 flex-col">
-            <div className="p-4 border-b border-white/5 flex items-center justify-between">
-              <p className="text-xs uppercase tracking-widest text-white/30">Prévia ao Vivo</p>
-              <div className="flex items-center gap-1 bg-white/5 rounded-lg p-0.5">
-                {([["desktop", Monitor], ["tablet", Tablet], ["mobile", Smartphone]] as const).map(([d, Icon]) => (
-                  <button
-                    key={d}
-                    onClick={() => setPreviewDevice(d)}
-                    className={`p-1.5 rounded-md transition-all ${previewDevice === d ? "bg-[#00E5F1]/20 text-[#00E5F1]" : "text-white/30 hover:text-white/60"}`}
-                  >
-                    <Icon size={13} />
-                  </button>
-                ))}
-              </div>
+        <aside className="hidden xl:flex w-[380px] shrink-0 border-l border-white/5 flex-col">
+          <div className="p-4 border-b border-white/5 flex items-center justify-between">
+            <p className="text-xs uppercase tracking-widest text-white/30">Prévia ao Vivo</p>
+            <div className="flex items-center gap-1 bg-white/5 rounded-lg p-0.5">
+              {([["desktop", Monitor], ["tablet", Tablet], ["mobile", Smartphone]] as const).map(([d, Icon]) => (
+                <button
+                  key={d}
+                  onClick={() => setPreviewDevice(d)}
+                  className={`p-1.5 rounded-md transition-all ${previewDevice === d ? "bg-[#00E5F1]/20 text-[#00E5F1]" : "text-white/30 hover:text-white/60"}`}
+                >
+                  <Icon size={13} />
+                </button>
+              ))}
             </div>
-            <div className="flex-1 overflow-hidden flex items-start justify-center p-4 bg-[#060b0d]">
-              <div
-                className="rounded-xl overflow-hidden border border-white/5 transition-all duration-300 shadow-2xl"
-                style={{
-                  width: previewDevice === "mobile" ? "375px" : previewDevice === "tablet" ? "100%" : "100%",
-                  maxWidth: "100%",
-                  minHeight: "400px",
-                  background: config.colorBg,
+          </div>
+          <div className="flex-1 overflow-hidden flex items-start justify-center p-4 bg-[#060b0d]">
+            <div
+              className={`rounded-xl overflow-hidden border border-white/10 transition-all duration-300 shadow-2xl relative ${previewDevice === "mobile" ? "ring-4 ring-white/5 rounded-[2rem]" : ""}`}
+              style={{
+                width: previewDevice === "mobile" ? "210px" : previewDevice === "tablet" ? "280px" : "100%",
+                maxWidth: "100%",
+                height: previewDevice === "mobile" ? "420px" : previewDevice === "tablet" ? "400px" : "auto",
+                minHeight: "400px",
+                background: config.colorBg,
+                flexShrink: 0
+              }}
+            >
+              {previewDevice === "mobile" && <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-4 rounded-full bg-black/40 z-10" />}
+              
+              {/* Box for aspect ratio/scale depending on device */}
+              <div 
+                style={{ 
+                  transform: previewDevice === "mobile" ? "scale(0.85)" : previewDevice === "tablet" ? "scale(0.75)" : "scale(0.6)", 
+                  transformOrigin: "top left", 
+                  width: previewDevice === "mobile" ? "117%" : previewDevice === "tablet" ? "133%" : "166.67%", 
+                  pointerEvents: "none",
+                  height: "100%",
+                  overflow: "hidden"
                 }}
               >
-                {/* Mini Preview */}
-                <div style={{ transform: "scale(0.6)", transformOrigin: "top left", width: "166.67%", pointerEvents: "none" }}>
-                  <div style={{ padding: "24px", minHeight: "600px" }}>
-                    {/* Mini Hero */}
-                    <div style={{ background: `linear-gradient(135deg, ${config.colorPetrol}80, ${config.colorBg})`, borderRadius: "16px", padding: "32px", marginBottom: "24px" }}>
-                      <div style={{ fontSize: "10px", color: config.colorNeon, marginBottom: "8px", letterSpacing: "0.2em", textTransform: "uppercase" }}>{config.heroTagline}</div>
-                      <div style={{ fontSize: "22px", fontWeight: 600, color: "#fff", marginBottom: "12px", lineHeight: 1.2 }}>{config.heroTitle}</div>
-                      <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)", marginBottom: "20px", lineHeight: 1.5 }}>{config.heroSubtitle.slice(0, 120)}...</div>
-                      <div style={{
-                        display: "inline-flex", alignItems: "center", gap: "6px",
-                        padding: "8px 18px", borderRadius: "999px",
-                        background: config.colorNeon, color: "#0b1416", fontSize: "11px", fontWeight: 700
-                      }}>
-                        {config.heroCta1}
-                      </div>
+                <div style={{ padding: previewDevice === "mobile" ? "16px" : "24px", minHeight: "100%" }}>
+                  {/* Mini Hero */}
+                  <div style={{ background: `linear-gradient(135deg, ${config.colorPetrol}80, ${config.colorBg})`, borderRadius: "16px", padding: previewDevice === "mobile" ? "20px" : "32px", marginBottom: "24px" }}>
+                    <div style={{ fontSize: previewDevice === "mobile" ? "8px" : "10px", color: config.colorNeon, marginBottom: "8px", letterSpacing: "0.2em", textTransform: "uppercase" }}>{config.heroTagline}</div>
+                    <div style={{ fontSize: previewDevice === "mobile" ? "16px" : "22px", fontWeight: 600, color: "#fff", marginBottom: "12px", lineHeight: 1.2 }}>{config.heroTitle}</div>
+                    <div style={{ fontSize: previewDevice === "mobile" ? "9px" : "11px", color: "rgba(255,255,255,0.6)", marginBottom: "20px", lineHeight: 1.5 }}>{config.heroSubtitle.slice(0, previewDevice === "mobile" ? 80 : 120)}...</div>
+                    <div style={{
+                      display: previewDevice === "mobile" ? "flex" : "inline-flex", 
+                      alignItems: "center", justifyContent: "center", gap: "6px",
+                      padding: "8px 18px", borderRadius: "999px",
+                      background: config.colorNeon, color: "#0b1416", fontSize: previewDevice === "mobile" ? "9px" : "11px", fontWeight: 700
+                    }}>
+                      {config.heroCta1}
                     </div>
+                  </div>
 
-                    {/* Mini Palette Preview */}
-                    <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
-                      {[config.colorNeon, config.colorOrange, config.colorPetrol].map((c, i) => (
-                        <div key={i} style={{ width: "40px", height: "40px", borderRadius: "10px", background: c }} />
-                      ))}
-                    </div>
+                  {/* Mini Palette Preview */}
+                  <div style={{ display: "flex", gap: "8px", marginBottom: "16px", flexWrap: previewDevice === "mobile" ? "wrap" : "nowrap" }}>
+                    {[config.colorNeon, config.colorOrange, config.colorPetrol].map((c, i) => (
+                      <div key={i} style={{ width: previewDevice === "mobile" ? "32px" : "40px", height: previewDevice === "mobile" ? "32px" : "40px", borderRadius: "10px", background: c }} />
+                    ))}
+                  </div>
 
-                    {/* Mini Content preview */}
-                    <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: "12px", padding: "20px", marginBottom: "12px" }}>
-                      <div style={{ fontSize: "8px", color: config.colorNeon, marginBottom: "6px", letterSpacing: "0.2em" }}>QUEM SOMOS</div>
-                      <div style={{ fontSize: "15px", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>{config.aboutTitle}</div>
-                      <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{config.aboutText.slice(0, 150)}...</div>
-                    </div>
+                  {/* Mini Content preview */}
+                  <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: "12px", padding: previewDevice === "mobile" ? "16px" : "20px", marginBottom: "12px" }}>
+                    <div style={{ fontSize: "8px", color: config.colorNeon, marginBottom: "6px", letterSpacing: "0.2em" }}>QUEM SOMOS</div>
+                    <div style={{ fontSize: previewDevice === "mobile" ? "13px" : "15px", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>{config.aboutTitle}</div>
+                    <div style={{ fontSize: previewDevice === "mobile" ? "9px" : "10px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{config.aboutText.slice(0, previewDevice === "mobile" ? 100 : 150)}...</div>
+                  </div>
 
-                    <div style={{ background: `linear-gradient(135deg, ${config.colorNeon}15, ${config.colorOrange}10)`, borderRadius: "12px", padding: "20px" }}>
-                      <div style={{ fontSize: "15px", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>{config.ctaTitle}</div>
-                      <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{config.ctaSubtitle.slice(0, 100)}...</div>
-                    </div>
+                  <div style={{ background: `linear-gradient(135deg, ${config.colorNeon}15, ${config.colorOrange}10)`, borderRadius: "12px", padding: previewDevice === "mobile" ? "16px" : "20px" }}>
+                    <div style={{ fontSize: previewDevice === "mobile" ? "13px" : "15px", fontWeight: 600, color: "#fff", marginBottom: "8px" }}>{config.ctaTitle}</div>
+                    <div style={{ fontSize: previewDevice === "mobile" ? "9px" : "10px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{config.ctaSubtitle.slice(0, previewDevice === "mobile" ? 60 : 100)}...</div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="p-3 border-t border-white/5 text-center">
-              <p className="text-[10px] text-white/20">Prévia representativa • Salve para aplicar ao site</p>
-            </div>
-          </aside>
-        )}
+          </div>
+          <div className="p-3 border-t border-white/5 text-center">
+            <p className="text-[10px] text-white/20">Prévia representativa • Salve para aplicar ao site</p>
+          </div>
+        </aside>
       </div>
     </div>
   );
