@@ -505,6 +505,11 @@ export function AdminPage() {
     setSaved(false);
   };
 
+  // Apply CSS vars live as config changes (real-time preview)
+  useEffect(() => {
+    applyCssVars(config);
+  }, [config]);
+
   const handleSave = () => {
     localStorage.setItem("expert_site_config", JSON.stringify(config));
     setSaved(true);
